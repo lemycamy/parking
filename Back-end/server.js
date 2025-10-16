@@ -11,7 +11,20 @@ dotenv.config();
 const app = express();
 
 // ✅ Middleware
-app.use(cors());           // Allow cross-origin requests
+app.use(
+  cors({
+    origin: [
+      "https://parking-eight-umber.vercel.app", // your Vercel frontend URL
+      "http://localhost:3000"                   // for local testing
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })git add .
+git commit -m "Fix CORS for Vercel frontend"
+git push origin main
+
+);
+           // Allow cross-origin requests
 app.use(express.json());   // Parse incoming JSON bodies
 
 // ✅ MongoDB Connection
