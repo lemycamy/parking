@@ -1,0 +1,112 @@
+/* === Admin Dashboard === */
+
+/* === General Page Layout === */
+.ez-dashboard-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #e6edf2;
+}
+
+/* === Topbar === */
+.ez-topbar {
+  background-color: #dfe6ed;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ez-topbar-inner {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.ez-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* === Dashboard Container === */
+.dashboard-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Dashboard Card Box === */
+.dashboard-card {
+  background-color: #f4f5f7;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  width: 430px;
+  padding: 35px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* === Dashboard Title === */
+.dashboard-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 25px;
+}
+
+/* === Button Grid === */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 18px;
+  width: 100%;
+  justify-items: center;
+}
+
+/* === Dashboard Buttons === */
+.dashboard-btn {
+  width: 150px;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #2b2b2b;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-btn:hover {
+  transform: scale(1.05);
+  background-color: #3b3b3b;
+}
+
+/* === Logout Button === */
+.logout-btn {
+  background-color: #582bc0;
+}
+
+.logout-btn:hover {
+  background-color: #7c48f5;
+}
+
+/* === Icon Colors === */
+.dashboard-btn svg {
+  color: #007bff;
+}

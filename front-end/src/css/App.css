@@ -1,0 +1,252 @@
+/* Import Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+:root {
+  --blue: #0b5bff;
+  --dark: #111111;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --shadow: 0 12px 28px rgba(0,0,0,0.25);
+  --border-radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Top Navigation Bar */
+.ez-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(180deg, var(--blue), #285dff);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 24px;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.ez-logo {
+  height: 160px; /* fixed min & max */
+  max-height: 160px;
+  min-height: 160px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.ez-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Page Background */
+.ez-login-page {
+  min-height: 100vh;
+  background: url("https://www.keflatwork.com/wp-content/uploads/2019/01/parking-lot-with-trees.jpg") center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px; /* space for topbar */
+}
+
+/* Layout */
+.ez-main {
+  display: flex;
+  align-items: flex-start; /* closer alignment */
+  justify-content: flex-start;
+  gap: 40px; /* reduced gap between welcome text and card */
+  max-width: 1300px;
+  margin: 60px auto 60px;
+  width: 90%;
+  flex-wrap: wrap;
+}
+
+/* Welcome Text */
+.ez-lefttext {
+  flex: 1;
+  color: white;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  min-width: 250px;
+  display: flex;
+  align-items: center; /* vertically aligned with card */
+}
+
+.ez-lefttext h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  max-width: 500px;
+}
+
+/* Login Card */
+.ez-card {
+  width: 400px;
+  max-width: 95%;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ez-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+}
+
+/* Form */
+.ez-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ez-label {
+  font-weight: 600;
+  margin: 8px 0 6px;
+}
+
+.ez-input {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.ez-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Forgot Password */
+.forgot-btn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
+}
+.forgot-btn:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+/* Login Button */
+.ez-login-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--blue);
+  border: none;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.ez-login-btn:hover {
+  background: #0061ff;
+  transform: translateY(-2px);
+}
+
+/* Modal Overlay */
+.ez-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 50;
+}
+
+.ez-modal {
+  background: white;
+  padding: 24px 28px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  width: 90%;
+  max-width: 360px;
+}
+
+/* Close Button */
+.ez-close {
+  padding: 10px 16px;
+  background: var(--dark);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .ez-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .ez-lefttext h1 {
+    font-size: 36px;
+  }
+
+  .ez-card {
+    width: 80%;
+  }
+
+  .ez-logo {
+    height: 160px; /* keep logo fixed */
+  }
+}
+
+@media (max-width: 768px) {
+  .ez-lefttext h1 {
+    font-size: 32px;
+  }
+
+  .ez-card {
+    width: 85%;
+    padding: 28px;
+  }
+
+  .ez-logo {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ez-lefttext h1 {
+    font-size: 26px;
+  }
+
+  .ez-card {
+    width: 90%;
+    padding: 24px;
+  }
+
+  .ez-login-btn {
+    padding: 12px;
+  }
+
+  .ez-logo {
+    height: 160px;
+  }
+}
