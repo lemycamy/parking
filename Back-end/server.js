@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./auth.js";
+import parkingRoutes from "./parkingRoutes.js";
+
+
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,11 +22,11 @@ app.use(
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  })git add .
-git commit -m "Fix CORS for Vercel frontend"
-git push origin main
+  })
 
 );
+
+app.get("/test", (req, res) => res.send("Backend is working"));
            // Allow cross-origin requests
 app.use(express.json());   // Parse incoming JSON bodies
 
@@ -38,6 +41,7 @@ mongoose
 
 // ✅ API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/parkingRecord", parkingRoutes);
 
 // ✅ Base route for quick check
 app.get("/", (req, res) => {

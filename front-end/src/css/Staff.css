@@ -1,6 +1,6 @@
 /* === Staff Dashboard === */
 
-.ez-dashboard-page {
+.staff-ez-dashboard-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -8,37 +8,37 @@
 }
 
 /* === Topbar === */
-.ez-topbar {
-  background-color: #dfe6ed;
+.staff-ez-topbar {
+  background-color: #285dff;
   height: 60px;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.ez-topbar-inner {
+.staff-ez-topbar-inner {
   display: flex;
   align-items: center;
   padding-left: 20px;
 }
 
-.ez-logo {
+.staff-ez-logo {
   height: 40px;
   width: auto;
 }
 
 /* === Dashboard Center Container === */
-.dashboard-container {
+.staff-dashboard-container {
   flex-grow: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* changed from row to column */
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
 }
 
-/* === Dashboard Card (Same as Staff Style) === */
-.dashboard-card {
+/* === Dashboard Card === */
+.staff-dashboard-card {
   background-color: #f9fcff;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -47,15 +47,14 @@
   flex-direction: row;
   align-items: center;
   transition: 0.3s ease;
-  
 }
 
-.dashboard-card:hover {
+.staff-dashboard-card:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* === Dashboard Title === */
-.dashboard-title {
+.staff-dashboard-title {
   font-size: 32px;
   font-weight: 800;
   margin-bottom: 30px;
@@ -64,61 +63,61 @@
 }
 
 /* === Buttons (Stacked Vertically) === */
-.dashboard-grid {
-  display:row;
-  margin: 10px;
-  flex-direction: row;
+.staff-dashboard-grid {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
 /* === Button Styling === */
-.dashboard-btn {
-  width: 220px;
-  padding: 12px 0;
-  font-size: 18px;
+.staff-dashboard-btn {
+  width: 260px;
+  padding: 14px 0;
+  font-size: 19px;
   font-weight: 700;
   color: #fff;
   background-color: #2b2b2b;
   border: none;
   border-radius: 10px;
-  display: table-row;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(1, 1, 1, 0.3);
   transition: all 0.25s ease;
-  margin: 10px;
+  margin: 5px 0;
 }
 
-.dashboard-btn:hover {
+.staff-dashboard-btn:hover {
   transform: scale(1.05);
   background-color: #3b3b3b;
 }
 
 /* === Logout Button === */
-.logout-btn {
+.staff-logout-btn {
   background-color: #c0392b;
-  
 }
 
-.logout-btn:hover {
+.staff-logout-btn:hover {
   background-color: #e74c3c;
 }
 
 /* === Icon Color === */
-.dashboard-btn svg {
+.staff-dashboard-btn svg {
   color: #007bff;
 }
 
 /* === Responsive (for phones) === */
 @media (max-width: 600px) {
-  .dashboard-card {
+  .staff-dashboard-card {
     padding: 40px 30px;
   }
 
-  .dashboard-btn {
+  .staff-dashboard-btn {
     width: 100%;
     max-width: 250px;
   }

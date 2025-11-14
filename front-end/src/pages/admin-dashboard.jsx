@@ -34,7 +34,7 @@ function AdminDashboard() {
     <h1 className="dashboard-title">Welcome Back</h1>
 
     <div className="dashboard-grid">
-      <button className="dashboard-btn">
+      <button className="dashboard-btn" onClick={() => navigate("/adminCCTV")}>
         <FaVideo /> CCTV
       </button>
 
@@ -42,7 +42,7 @@ function AdminDashboard() {
         <FaThLarge /> Layout
       </button>
 
-      <button className="dashboard-btn">
+      <button className="dashboard-btn" onClick={() => navigate("/admin-reports")}>
         <FaFileAlt /> Report
       </button>
 
