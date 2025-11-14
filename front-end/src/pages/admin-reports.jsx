@@ -34,21 +34,23 @@ function AdminReports() {
     navigate("/", { replace: true });
   };
 
-  // States
+  // State
   const [allLogs, setAllLogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("daily");
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const rowsPerPage = 10;
 
-  // Fetch parking logs
+  // Fetch logs
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const res = await axios.get("https://parking-zlmz.onrender.com");
-        setAllLogs(res.data);
+        const res = await axios.get("https://parking-zlmz.onrender.com/api/parkingRecord");
+        if (Array.isArray(res.data)) setAllLogs(res.data);
+        else console.error("Expected array from API, got:", res.data);
       } catch (err) {
         console.error("Error fetching logs:", err);
       }
@@ -56,23 +58,30 @@ function AdminReports() {
     fetchLogs();
   }, []);
 
-  // Search filter
-  const filteredLogs = allLogs.filter(
-    (log) =>
-      log.vehicleType?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.plateNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.ownerName?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  // Filter logs based on tab & date range
-  const getFilteredByTab = () => {
+  // Filter logs
+  const getFilteredLogs = () => {
     const startDate = dateFrom ? new Date(dateFrom) : new Date("1970-01-01");
     const endDate = dateTo ? new Date(dateTo) : new Date("2100-01-01");
 
-    return filteredLogs.filter((log) => {
+    return allLogs.filter((log) => {
+      // Ensure log has timeIn
+      if (!log.timeIn) return false;
+
       const logDate = new Date(log.timeIn);
       if (logDate < startDate || logDate > endDate) return false;
 
+      // Search
+      const searchMatch =
+        log.vehicleType?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        log.plateNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        log.ownerName?.toLowerCase().includes(searchQuery.toLowerCase());
+
+      if (!searchMatch) return false;
+
+      // Status filter
+      if (statusFilter !== "all" && log.status.toLowerCase() !== statusFilter.toLowerCase()) return false;
+
+      // Tabs
       const now = new Date();
       switch (activeTab) {
         case "daily":
@@ -87,8 +96,9 @@ function AdminReports() {
     });
   };
 
-  const currentLogs = getFilteredByTab().slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-  const totalPages = Math.ceil(getFilteredByTab().length / rowsPerPage);
+  const filteredLogs = getFilteredLogs();
+  const currentLogs = filteredLogs.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const totalPages = Math.ceil(filteredLogs.length / rowsPerPage);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
@@ -96,12 +106,12 @@ function AdminReports() {
 
   // CSV Export
   const exportCSV = () => {
-    const logsToExport = getFilteredByTab();
     const csvRows = [];
-    csvRows.push(["Date", "Vehicle", "Plate No.", "Time In", "Time Out", "Total Hours", "Rate/Hour", "Total", "Status"]);
+    csvRows.push(["Name", "Date", "Vehicle", "Plate No.", "Time In", "Time Out", "Total Hours", "Rate/Hour", "Total", "Status"]);
 
-    logsToExport.forEach((log) => {
+    filteredLogs.forEach((log) => {
       csvRows.push([
+        log.ownerName,
         new Date(log.timeIn).toLocaleDateString(),
         log.vehicleType,
         log.plateNumber,
@@ -125,14 +135,14 @@ function AdminReports() {
   };
 
   // Charts
-  const graphData = getFilteredByTab().map((log) => ({
+  const graphData = filteredLogs.map((log) => ({
     date: new Date(log.timeIn).toLocaleDateString(),
-    pending: log.status === "Pending" ? 1 : 0,
-    paid: log.status === "paid" ? 1 : 0,
+    pending: log.status.toLowerCase() === "pending" ? 1 : 0,
+    paid: log.status.toLowerCase() === "paid" ? 1 : 0,
   }));
 
   const vehicleCounts = {};
-  getFilteredByTab().forEach((log) => {
+  filteredLogs.forEach((log) => {
     vehicleCounts[log.vehicleType] = (vehicleCounts[log.vehicleType] || 0) + (log.totalFee || 0);
   });
   const pieData = Object.keys(vehicleCounts).map((key) => ({ name: key, value: vehicleCounts[key] }));
@@ -140,9 +150,9 @@ function AdminReports() {
 
   // Summary
   const summaryData = {
-    totalEarnings: getFilteredByTab().reduce((acc, log) => acc + (log.totalFee || 0), 0),
-    vehiclesToday: getFilteredByTab().filter((log) => new Date(log.timeIn).toDateString() === new Date().toDateString()).length,
-    pendingPayments: getFilteredByTab().filter((log) => log.status === "Pending").length,
+    totalEarnings: filteredLogs.reduce((acc, log) => acc + (log.totalFee || 0), 0),
+    vehiclesToday: filteredLogs.filter((log) => new Date(log.timeIn).toDateString() === new Date().toDateString()).length,
+    pendingPayments: filteredLogs.filter((log) => log.status.toLowerCase() === "pending").length,
   };
 
   return (
@@ -161,7 +171,7 @@ function AdminReports() {
         </div>
       </div>
 
-      {/* Summary Cards */}
+      {/* Summary */}
       <div style={{ display: "flex", gap: "20px", marginBottom: "30px", flexWrap: "wrap" }}>
         <Card title="Total Earnings" value={`$${summaryData.totalEarnings}`} color="#4CAF50" />
         <Card title="Vehicles Today" value={summaryData.vehiclesToday} color="#2196F3" />
@@ -172,7 +182,7 @@ function AdminReports() {
       <div style={{ display: "flex", gap: "15px", flexWrap: "wrap", marginBottom: "25px", alignItems: "center" }}>
         <input type="date" style={inputStyle} value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
         <input type="date" style={inputStyle} value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
-        <select style={inputStyle} value="all">
+        <select style={inputStyle} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="all">All Status</option>
           <option value="pending">Pending</option>
           <option value="paid">Paid</option>
@@ -278,7 +288,7 @@ function AdminReports() {
   );
 }
 
-// Components
+// Components & Styles
 const Card = ({ title, value, color }) => (
   <div style={{ flex: "1 1 200px", background: "#fff", borderRadius: "12px", padding: "20px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <span style={{ fontSize: "14px", color: "#555" }}>{title}</span>
@@ -295,7 +305,6 @@ const NavButton = ({ text, path, active }) => {
   );
 };
 
-// Styles
 const logoutBtnStyle = { padding: "8px 15px", borderRadius: "6px", border: "none", cursor: "pointer", backgroundColor: "#e0e0e0", color: "#333", fontWeight: "normal" };
 const tabBtnStyle = { padding: "10px 18px", cursor: "pointer", backgroundColor: "#e0e0e0", color: "#333", border: "none", borderRadius: "6px" };
 const activeTabStyle = { ...tabBtnStyle, backgroundColor: "#2b2b2b", color: "#fff" };
