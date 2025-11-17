@@ -20,7 +20,11 @@ function StaffDashboard() {
     navigate("/", { replace: true });
   };
 
+  
+
   return (
+
+    
     <div className="staff-ez-dashboard-page">
       {/* Topbar */}
       <div className="staff-ez-topbar">
@@ -33,11 +37,11 @@ function StaffDashboard() {
         <h1 className="staff-dashboard-title">Welcome Back</h1>
 
         <div className="staff-dashboard-grid">
-          <button className="staff-dashboard-btn">
+          <button className="staff-dashboard-btn" onClick={() => navigate("/timeIn")}>
             <FaClock /> Time - In
           </button>
 
-          <button className="staff-dashboard-btn">
+          <button className="staff-dashboard-btn" onClick={() => navigate("/timeOut")}>
             <FaArrowRight /> Check - Out
           </button>
 

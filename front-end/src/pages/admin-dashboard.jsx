@@ -38,7 +38,7 @@ function AdminDashboard() {
         <FaVideo /> CCTV
       </button>
 
-      <button className="dashboard-btn">
+      <button className="dashboard-btn" onClick={() => navigate("/admin-layout")}>
         <FaThLarge /> Layout
       </button>
 

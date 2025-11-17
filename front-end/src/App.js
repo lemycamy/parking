@@ -6,6 +6,9 @@ import StaffDashboard from "./pages/staff-dashboard";
 import AdminDashboard from "./pages/admin-dashboard";
 import AdminCCTV from "./pages/adminCCTV";
 import AdminReports from "./pages/admin-reports";
+import TimeIn from "./pages/timeIn";
+import TimeOut from "./pages/TimeOutPage";
+import AdminLayout from "./pages/AdminLayout";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard/>} />
         <Route path="/adminCCTV" element={<AdminCCTV/>} />
         <Route path="/admin-reports" element={<AdminReports/>} />
+        <Route path="/timeIn" element={<TimeIn/>} />
+        <Route path="/timeOut" element={<TimeOut/>} />
+        <Route path="/admin-layout" element={<AdminLayout/>} />
       </Routes>
     </Router>
   );

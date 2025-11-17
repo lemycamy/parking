@@ -1,0 +1,108 @@
+/* Page container */
+.timein-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Back button */
+.back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-button .icon {
+  margin-right: 5px;
+}
+
+.back-button:hover {
+  background-color: #e5e7eb;
+}
+
+/* Card */
+.timein-card {
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Heading */
+.timein-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Message */
+.message {
+  margin-bottom: 15px;
+  color: red;
+  font-size: 14px;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* Submit button */
+.submit-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+}
+
+.submit-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}

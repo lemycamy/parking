@@ -64,13 +64,11 @@ function AdminReports() {
     const endDate = dateTo ? new Date(dateTo) : new Date("2100-01-01");
 
     return allLogs.filter((log) => {
-      // Ensure log has timeIn
       if (!log.timeIn) return false;
 
       const logDate = new Date(log.timeIn);
       if (logDate < startDate || logDate > endDate) return false;
 
-      // Search
       const searchMatch =
         log.vehicleType?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         log.plateNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -78,10 +76,8 @@ function AdminReports() {
 
       if (!searchMatch) return false;
 
-      // Status filter
       if (statusFilter !== "all" && log.status.toLowerCase() !== statusFilter.toLowerCase()) return false;
 
-      // Tabs
       const now = new Date();
       switch (activeTab) {
         case "daily":
@@ -167,6 +163,7 @@ function AdminReports() {
           <NavButton text="Dashboard" path="/admin-dashboard" />
           <NavButton text="CCTV" path="/adminCCTV" />
           <NavButton text="Reports" path="/admin-reports" active />
+          <NavButton text="Layout" path="/admin-layout" />
           <button onClick={handleLogout} style={logoutBtnStyle}>Logout</button>
         </div>
       </div>
@@ -298,8 +295,27 @@ const Card = ({ title, value, color }) => (
 
 const NavButton = ({ text, path, active }) => {
   const navigate = useNavigate();
+  const [hover, setHover] = useState(false);
+
+  const style = {
+    padding: "8px 15px",
+    borderRadius: "6px",
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: active || hover ? "#2b2b2b" : "#e0e0e0",
+    color: active || hover ? "#fff" : "#333",
+    fontWeight: active ? "bold" : "normal",
+    transition: "0.2s",
+    whiteSpace: "nowrap",
+  };
+
   return (
-    <button onClick={() => navigate(path)} style={{ padding: "8px 15px", borderRadius: "6px", border: "none", cursor: "pointer", backgroundColor: active ? "#2b2b2b" : "#e0e0e0", color: active ? "#fff" : "#333", fontWeight: active ? "bold" : "normal", transition: "0.2s", whiteSpace: "nowrap" }}>
+    <button
+      onClick={() => navigate(path)}
+      style={style}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {text}
     </button>
   );
