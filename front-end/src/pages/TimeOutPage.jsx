@@ -76,7 +76,7 @@ const TimeOutPage = () => {
       const { totalFee, ratePerHour } = calculateFee(record.vehicleType, hours, isCustomer);
 
       const res = await axios.put(
-        `http://localhost:5000/api/parkingRecord/timeout/${record._id}`,
+        `https://parking-zlmz.onrender.com/api/parkingRecord/${record._id}`,
         { isCustomer, totalFee, ratePerHour, timeOut, totalHours: hours }
       );
 
