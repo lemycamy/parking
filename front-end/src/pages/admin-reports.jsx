@@ -233,10 +233,10 @@ function AdminReports() {
                 <td>{new Date(log.timeIn).toLocaleTimeString()}</td>
                 <td>{log.timeOut ? new Date(log.timeOut).toLocaleTimeString() : "-"}</td>
                 <td>{log.totalHours || "-"}</td>
-                <td>${log.ratePerHour || "-"}</td>
-                <td>${log.totalFee || "-"}</td>
+                <td>₱{log.ratePerHour || "-"}</td>
+                <td>₱{log.totalFee || "-"}</td>
                 <td>{log.status}</td>
-              </tr>
+              </tr> 
             ))}
           </tbody>
         </table>

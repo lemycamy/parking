@@ -17,6 +17,8 @@ const calculateFee = (vehicleType, hours, isCustomer) => {
   const rateType = isCustomer ? "customer" : "normal";
   let ratePerHour = RATES[vehicleType]?.[rateType] || 0;
 
+  
+
   if (hours > 2) ratePerHour += ADDITIONAL_AFTER_2_HOURS;
 
   const totalFee = hours * ratePerHour;

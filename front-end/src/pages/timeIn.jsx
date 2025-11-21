@@ -92,7 +92,7 @@ const TimeInPage = ({ currentUser }) => {
             >
               <option value="Car">Car</option>
               <option value="Motorcycle">Motorcycle</option>
-              <option value="Other">Other</option>
+
             </select>
           </div>
 

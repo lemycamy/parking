@@ -14,19 +14,31 @@ router.get("/", async (req, res) => {
   }
 });
 
+const rateMap = {
+  Motorcycle: 40,
+  Car: 50,
+
+};
+
 // POST Time In
 router.post("/timein", async (req, res) => {
   try {
-    const { plateNumber, ownerName, vehicleType, createdBy } = req.body;
+    const { plateNumber, ownerName, vehicleType = "Car", createdBy } = req.body;
     const date = new Date().toISOString().split("T")[0];
+
+    // Set rate per hour based on vehicle type
+    const ratePerHour = rateMap[vehicleType] || 50;
+
     const record = new ParkingRecord({
       plateNumber,
       ownerName,
       vehicleType,
       timeIn: new Date(),
       date,
-      createdBy
+      createdBy,
+      ratePerHour, // store in MongoDB
     });
+
     await record.save();
     res.status(201).json(record);
   } catch (err) {
@@ -43,11 +55,18 @@ router.put("/timeout/:id", async (req, res) => {
 
     record.timeOut = new Date();
     record.isCustomer = isCustomer;
+
+    // Calculate hours
     const hours = Math.ceil((record.timeOut - record.timeIn) / (1000 * 60 * 60));
     record.totalHours = hours;
 
-    record.ratePerHour = 50;
-    record.totalFee = isCustomer ? hours * record.ratePerHour * 0.8 : hours * record.ratePerHour;
+    // Get rate per vehicle type
+    const baseRate = rateMap[record.vehicleType] || 50;
+    record.ratePerHour = baseRate;
+
+    // Calculate total fee with discount for customers
+    record.totalFee = isCustomer ? hours * baseRate * 0.8 : hours * baseRate;
+
     record.status = "paid";
 
     await record.save();
@@ -56,5 +75,6 @@ router.put("/timeout/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 export default router;
